@@ -89,4 +89,17 @@ router.get("/whoami", async (req, res) => {
   }
 });
 
+// WHO AM I ROUTE - CONFIRM LOGIN
+router.post("/logout", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (token) {
+      res.clearCookie("token");
+      return res.status(200).json({ message: "Successfully logged out." });
+    }
+  } catch (err) {
+    return res.status(401).json({ error: "Error logging out" });
+  }
+});
+
 module.exports = router;
