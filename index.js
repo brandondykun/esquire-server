@@ -30,6 +30,8 @@ app.use("/contact", require("./routes/contact"));
 app.use("/note", require("./routes/note"));
 // EVENTS ROUTES
 app.use("/event", require("./routes/event"));
+// CASE ROUTES
+app.use("/case", require("./routes/case"));
 
 // Address
 // app.get("/address/:id", (req, res) => {
@@ -47,23 +49,23 @@ app.use("/event", require("./routes/event"));
 // });
 
 // Cases
-app.get("/case", (req, res) => {
-  res.send("Cases");
-});
+// app.get("/case", (req, res) => {
+//   res.send("Cases");
+// });
 
-app.get("/case/:id", (req, res) => {
-  const { id } = req.params;
-  res.send("A Case");
-});
+// app.get("/case/:id", (req, res) => {
+//   const { id } = req.params;
+//   res.send("A Case");
+// });
 
-app.post("/case", (req, res) => {
-  res.send("Create A Case");
-});
+// app.post("/case", (req, res) => {
+//   res.send("Create A Case");
+// });
 
-app.delete("/case/:id", (req, res) => {
-  const { id } = req.params;
-  res.send("Delete A Case");
-});
+// app.delete("/case/:id", (req, res) => {
+//   const { id } = req.params;
+//   res.send("Delete A Case");
+// });
 
 // Contact Info
 app.get("/contactInfo/:id", (req, res) => {
