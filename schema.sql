@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS contact(
 );
 
 -- Case table for client cases
-CREATE TABLE IF NOT EXISTS case(
+CREATE TABLE IF NOT EXISTS "case"(
   id SERIAL PRIMARY KEY,
   name VARCHAR(64),
   case_number VARCHAR(64),
