@@ -35,6 +35,34 @@ router.post("/", cookieJwtAuth, async (req, res) => {
   }
 });
 
+// EDIT AN ADDRESS
+router.put("/:addressId", cookieJwtAuth, async (req, res) => {
+  try {
+    const { addressId } = req.params;
+    const userId = req.user.id;
+    const { clientId, street, city, state, zip } = req.body;
+
+    const addressQuery = await pool.query(
+      `UPDATE address
+        SET 
+        client_id = $1, 
+        street = $2, 
+        city = $3, 
+        state = $4,
+        zip = $5,
+        WHERE id = $6 
+          RETURNING *`,
+      [clientId, street, city, state, zip, addressId]
+    );
+    const editedAddress = addressQuery.rows[0];
+    res.status(201).json(editedAddress);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: "There was a problem editing that address." });
+  }
+});
+
 // DELETE AN ADDRESS
 router.delete("/:id", cookieJwtAuth, async (req, res) => {
   try {

@@ -48,7 +48,6 @@ router.post("/register", async (req, res) => {
 
   const saltRound = 10;
   const salt = await bcrypt.genSalt(saltRound);
-
   const bcryptPassword = await bcrypt.hash(password, salt);
 
   const newUserQuery = await pool.query(

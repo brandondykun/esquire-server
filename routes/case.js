@@ -5,14 +5,14 @@ const { cookieJwtAuth } = require("../middleware/cookieJWTAuth");
 // GET ALL CASES THAT BELONG TO A USER
 router.get("/user/:clientId", cookieJwtAuth, async (req, res) => {
   try {
-    console.log("GETTING CASES");
+    // console.log("GETTING CASES");
     const { clientId } = req.params;
     const user = req.user;
     const casesQuery = await pool.query(
       `SELECT * FROM "case" WHERE client_id = $1`,
       [clientId]
     );
-    console.log("CASES: ", casesQuery.rows);
+    // console.log("CASES: ", casesQuery.rows);
     res.status(200).json(casesQuery.rows);
   } catch (error) {
     res.status(400);
@@ -43,7 +43,7 @@ router.post("/", cookieJwtAuth, async (req, res) => {
   try {
     const userId = req.user.id;
     const { name, caseNumber, type, clientId } = req.body;
-    console.log("CASE BODY: ", req.body);
+    // console.log("CASE BODY: ", req.body);
 
     const caseQuery = await pool.query(
       `INSERT INTO "case" (name, case_number, type, client_id) VALUES ( $1, $2, $3, $4) RETURNING *`,

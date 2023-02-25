@@ -7,7 +7,19 @@ router.get("/", cookieJwtAuth, async (req, res) => {
   try {
     const user = req.user;
     const clients = await pool.query(
-      "SELECT * FROM client WHERE user_id = $1",
+      `SELECT 
+        c.id, 
+        c.first_name, 
+        c.middle_name, 
+        c.last_name, 
+        c.user_id, 
+        COUNT("case".id) AS case_count
+      FROM client AS c
+      LEFT JOIN "case"
+        ON c.id = "case".client_id
+      WHERE c.user_id = $1
+      GROUP BY c.id
+      ORDER BY c.id`,
       [user.id]
     );
     res.status(200).json(clients.rows);
@@ -45,6 +57,33 @@ router.post("/", cookieJwtAuth, async (req, res) => {
     );
     const client = clientQuery.rows[0];
     res.status(201).json(client);
+  } catch (error) {
+    res.status(400).json({ error: "There was a problem saving that data." });
+  }
+});
+
+// EDIT A CLIENT
+router.put("/:id", cookieJwtAuth, async (req, res) => {
+  console.log("IN THE CLIENT NAME PUT");
+  try {
+    const userId = req.user.id;
+    console.log("userId: ", userId);
+    const { id } = req.params;
+    console.log("id: ", id);
+
+    const { firstName, middleName, lastName } = req.body;
+
+    console.log("firstName: ", firstName);
+    console.log("middleName: ", middleName);
+    console.log("lastName: ", lastName);
+
+    const clientQuery = await pool.query(
+      "UPDATE client SET first_name = $1, middle_name = $2, last_name = $3, user_id = $4 WHERE id = $5 RETURNING *",
+      [firstName, middleName, lastName, userId, id]
+    );
+    const client = clientQuery.rows[0];
+    console.log("CLIENT: ", client);
+    res.status(200).json(client);
   } catch (error) {
     res.status(400).json({ error: "There was a problem saving that data." });
   }

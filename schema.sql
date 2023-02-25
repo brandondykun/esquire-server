@@ -154,3 +154,14 @@ VALUES
 ('Miller v. Commonwealth of PA', "PA-19323of2021 CU", "Criminal", 5),
 ('Miller v. Commonwealth of PA', "PA-1233of2019 CU", "Criminal", 5),
 ('Banks v. First National Bank', "NJ-8455of2011 CU", "Contract Dispute", 6);
+
+
+
+
+-- SELECT c.id, c.first_name, c.middle_name, c.last_name, c.user_id, COUNT("case".id) AS case_count
+-- FROM client AS c
+-- LEFT JOIN "case"
+--   ON c.id = "case".client_id
+-- WHERE c.user_id=21
+-- GROUP BY c.id
+-- ORDER BY c.id;
